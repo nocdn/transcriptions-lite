@@ -58,7 +58,7 @@ function App() {
   }
 
   return (
-    <div className="grid place-content-center h-dvh w-screen">
+    <div className="grid place-content-center h-dvh w-screen motion-preset-focus-sm">
       <DropZone onClick={handleClick} onDropped={handleFile}>
         {(() => {
           // Start of IIFE
