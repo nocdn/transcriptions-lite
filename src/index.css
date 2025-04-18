@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=IBM+Plex+Mono:wght@300;400;500;600;700&family=JetBrains+Mono:wght@100..800&display=swap");
+@import "tailwindcss";
+@plugin "tailwindcss-motion";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+  --font-geist: "Geist", sans-serif;
+  --font-geist-mono: "Geist Mono", monospace;
+  --font-jetbrains-mono: "JetBrains Mono", monospace;
+  --font-plex-mono: "IBM Plex Mono", monospace;
+
+  --animate-blur-in-custom: preview-popover-up
+    cubic-bezier(0.165, 0.84, 0.44, 1) 0.5s forwards;
+
+  @keyframes preview-popover-up {
+    0% {
+      opacity: 0;
+      filter: blur(10px);
+    }
+    100% {
+      opacity: 1;
+      filter: blur(0px);
+    }
+  }
+
+  --animate-copied-message-up: copied-message-up
+    cubic-bezier(0.165, 0.84, 0.44, 1) 0.4s forwards;
+
+  @keyframes copied-message-up {
+    0% {
+      opacity: 0;
+      filter: blur(4px);
+    }
+    100% {
+      opacity: 1;
+      filter: blur(0px);
+    }
+  }
+}
