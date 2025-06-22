@@ -1,10 +1,10 @@
-import { motion } from "motion/react";
-import { useState } from "react";
+import { motion } from "motion/react"
+import { useState } from "react"
 
 interface DropZoneProps {
-  children: React.ReactNode;
-  onClick: () => void;
-  onDropped: (file: File) => void;
+  children: React.ReactNode
+  onClick: () => void
+  onDropped: (file: File) => void
 }
 
 export default function DropZone({
@@ -13,7 +13,7 @@ export default function DropZone({
   onDropped,
   ...props
 }: DropZoneProps) {
-  const [isDraggingOver, setIsDraggingOver] = useState(false);
+  const [isDraggingOver, setIsDraggingOver] = useState(false)
 
   return (
     <motion.div
@@ -46,26 +46,26 @@ export default function DropZone({
       whileTap={{ scale: 0.98 }}
       // --- Event handling ---
       onClick={() => {
-        onClick();
+        onClick()
       }}
       onDragOver={(event) => {
         // Add this handler
-        event.preventDefault(); // Prevent default behavior to allow dropping
-        setIsDraggingOver(true);
+        event.preventDefault() // Prevent default behavior to allow dropping
+        setIsDraggingOver(true)
       }}
       onDragLeave={(event) => {
-        event.preventDefault();
-        setIsDraggingOver(false);
+        event.preventDefault()
+        setIsDraggingOver(false)
       }}
       onDrop={(event) => {
-        event.preventDefault(); // Prevent default file opening behavior
-        const droppedFile = event.dataTransfer.files[0];
-        setIsDraggingOver(false);
-        onDropped(droppedFile);
+        event.preventDefault() // Prevent default file opening behavior
+        const droppedFile = event.dataTransfer.files[0]
+        setIsDraggingOver(false)
+        onDropped(droppedFile)
       }}
       {...props}
     >
       <div>{children}</div>
     </motion.div>
-  );
+  )
 }
