@@ -1,6 +1,6 @@
 import { useState } from "react"
 import DropZone from "./DropZone"
-import { LoaderCircle, X } from "lucide-react"
+import { X } from "lucide-react"
 import AudioIcon from "./components/icons/audio"
 import Spinner from "./components/Spinner"
 
