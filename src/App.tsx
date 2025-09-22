@@ -1,6 +1,6 @@
 import { useState } from "react"
 import DropZone from "./DropZone"
-import { X } from "lucide-react"
+import { Copy, X } from "lucide-react"
 import AudioIcon from "./components/icons/audio"
 import Spinner from "./components/Spinner"
 
@@ -13,22 +13,19 @@ function App() {
   const [copiedMessage, setCopiedMessage] = useState(false)
 
   function handleClick() {
-    // open a file dialog here and select one file
-    const input = document.createElement("input") // create an input element
-    input.type = "file" // set the input type to file
-    input.accept = "audio/*" // specify accepted file types to audio
+    const input = document.createElement("input")
+    input.type = "file"
+    input.accept = "audio/*"
     input.onchange = (event: any) => {
-      // attach an event listener
-      const file = event.target.files?.[0] // get the selected file
+      const file = event.target.files?.[0]
       if (file) {
-        // check if a file was selected
-        handleFile(file) // call handleFile with the selected file
+        handleFile(file)
       }
     }
     if (transcriptionText !== "") {
       return
     } else {
-      input.click() // trigger the file dialog
+      input.click()
     }
   }
 
@@ -63,10 +60,8 @@ function App() {
     <div className="grid place-content-center h-dvh w-screen motion-opacity-in-0">
       <DropZone onClick={handleClick} onDropped={handleFile}>
         {(() => {
-          // Start of IIFE
           if (stage === "initial") {
             return (
-              // Return the JSX for this case
               <div className="ml-12 mr-12 mt-4 mb-4 flex flex-col items-center gap-1 motion-opacity-in-0">
                 <div className="w-13 h-13 border border-gray-100 rounded-full grid place-content-center mb-5">
                   <AudioIcon size={18} />
@@ -81,7 +76,6 @@ function App() {
             )
           } else if (stage === "processing") {
             return (
-              // Return the JSX for this case
               <div className="p-4 flex flex-col items-center text-blue-600 motion-preset-focus-sm">
                 <Spinner size={18} className="mb-3" />
                 <p className="text-sm font-geist-mono">transcribing</p>
@@ -89,7 +83,6 @@ function App() {
             )
           } else if (stage === "done") {
             return (
-              // Return the JSX for this case
               <div className="flex flex-col items-center">
                 <p className="font-geist text-[15px] max-w-md h-fit">
                   {transcriptionText}
@@ -97,25 +90,35 @@ function App() {
               </div>
             )
           } else {
-            return null // Default case
+            return null
           }
         })()}
       </DropZone>
 
       {copiedMessage ? (
-        <p className="font-jetbrains-mono text-sm font-medium w-full text-center mt-4 text-blue-600/75 animate-copied-message-up inline-flex gap-3 justify-center items-center">
-          COPIED{" "}
-          <X
-            size={18}
-            strokeWidth={2.5}
-            className="cursor-pointer bg-gray-100 rounded-full p-1 h-5 w-5 grid place-content-center text-gray-600"
-            onClick={() => {
-              setStage("initial")
-              setCopiedMessage(false)
-              setTranscriptionText("")
-            }}
-          />
-        </p>
+        <div className="animate-copied-message-up flex gap-3 justify-center items-center mt-4">
+          <div className="cursor-pointer bg-gray-100 rounded-full p-2.5 grid place-content-center text-gray-600">
+            <Copy
+              size={14.45}
+              strokeWidth={2.5}
+              onClick={() => {
+                navigator.clipboard.writeText(transcriptionText)
+                setTranscriptionText(transcriptionText)
+              }}
+            />
+          </div>
+          <div className="cursor-pointer bg-gray-100 rounded-full p-2 grid place-content-center text-gray-600">
+            <X
+              size={17}
+              strokeWidth={2.5}
+              onClick={() => {
+                setStage("initial")
+                setCopiedMessage(false)
+                setTranscriptionText("")
+              }}
+            />
+          </div>
+        </div>
       ) : (
         <></>
       )}

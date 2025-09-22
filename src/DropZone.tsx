@@ -18,39 +18,34 @@ export default function DropZone({
   return (
     <motion.div
       className="font-jetbrains-mono cursor-pointer px-3 py-1 bg-white"
-      // --- Core animation properties ---
-      layout // THIS IS THE KEY! Enables automatic size/position animation
+      layout
+      initial={{ scale: 0.9 }}
+      animate={{ scale: 1 }}
       transition={{
-        // Optional: customize the animation (spring is nice for this)
         type: "spring",
         stiffness: 500,
         damping: 30,
-        // Or a simple ease: duration: 0.2, ease: "easeInOut"
       }}
-      // --- Basic button styling ---
       style={{
-        display: "inline-flex", // Crucial: makes the div wrap its content tightly
+        display: "inline-flex",
         justifyContent: "center",
-        padding: "1rem", // Adjust padding as needed
+        padding: "1rem",
         backgroundColor: "white",
         color: "black",
         border: "none",
         borderRadius: "14px",
         cursor: "pointer",
-        overflow: "scroll", // Helps contain content during animation
+        overflow: "scroll",
         outline: isDraggingOver ? `1px dashed blue` : `1px dashed lightgray`,
         maxHeight: "40rem",
       }}
-      // --- Optional: Add interaction feedback ---
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      // --- Event handling ---
       onClick={() => {
         onClick()
       }}
       onDragOver={(event) => {
-        // Add this handler
-        event.preventDefault() // Prevent default behavior to allow dropping
+        event.preventDefault()
         setIsDraggingOver(true)
       }}
       onDragLeave={(event) => {
@@ -58,7 +53,7 @@ export default function DropZone({
         setIsDraggingOver(false)
       }}
       onDrop={(event) => {
-        event.preventDefault() // Prevent default file opening behavior
+        event.preventDefault()
         const droppedFile = event.dataTransfer.files[0]
         setIsDraggingOver(false)
         onDropped(droppedFile)
