@@ -5,12 +5,14 @@ interface DropZoneProps {
   children: React.ReactNode
   onClick: () => void
   onDropped: (file: File) => void
+  stage: string
 }
 
 export default function DropZone({
   children,
   onClick,
   onDropped,
+  stage,
   ...props
 }: DropZoneProps) {
   const [isDraggingOver, setIsDraggingOver] = useState(false)
@@ -29,18 +31,17 @@ export default function DropZone({
       style={{
         display: "inline-flex",
         justifyContent: "center",
-        padding: "1rem",
         backgroundColor: "white",
         color: "black",
         border: "none",
         borderRadius: "14px",
-        cursor: "pointer",
+        cursor: stage === "done" ? "text" : "pointer",
         overflow: "scroll",
         outline: isDraggingOver ? `1px dashed blue` : `1px dashed lightgray`,
         maxHeight: "40rem",
       }}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ scale: stage === "done" ? 1 : 1.02 }}
+      whileTap={{ scale: stage === "done" ? 1 : 0.98 }}
       onClick={() => {
         onClick()
       }}
