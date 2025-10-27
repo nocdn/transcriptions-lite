@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import DropZone from "./DropZone"
 import { Check, Copy, Gauge, X } from "lucide-react"
 import AudioIcon from "./components/icons/audio"
