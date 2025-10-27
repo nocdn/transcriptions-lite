@@ -1,4 +1,5 @@
 import { useState } from "react"
+import type React from "react"
 import { motion, AnimatePresence } from "motion/react"
 import { cn } from "@/lib/utils"
 
@@ -7,34 +8,41 @@ export function AnimatedCircularButton({
   secondaryChildren,
   className,
   onClick,
+  isActive,
   ariaLabel,
 }: {
   children: React.ReactNode
   secondaryChildren?: React.ReactNode
   className?: string
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  isActive?: boolean
   ariaLabel: string
 }) {
   const [isShowingSecondary, setIsShowingSecondary] = useState(false)
 
   return (
     <motion.button
+      type="button"
       tabIndex={0}
       aria-label={ariaLabel}
       className={cn(
-        "group flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-200 dark:hover:bg-gray-300",
+        "group flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full",
         className
       )}
-      onClick={() => {
+      onClick={(event) => {
+        if (typeof isActive === "boolean") {
+          onClick?.(event)
+          return
+        }
         setIsShowingSecondary(!isShowingSecondary)
-        onClick?.()
+        onClick?.(event)
         setTimeout(() => {
           setIsShowingSecondary(false)
         }, 1000)
       }}
     >
       <AnimatePresence mode="popLayout" initial={false}>
-        {isShowingSecondary ? (
+        {(typeof isActive === "boolean" ? isActive : isShowingSecondary) ? (
           <motion.div
             key="secondary"
             initial={{ opacity: 0, scale: 0.2, filter: "blur(2px)" }}
